@@ -4,6 +4,7 @@
 ## ※更新の際は以前のバージョンを削除してからインポートしてください。  
 ### 拡張エディタについて
 アバターの SkinnedMeshRenderer / MeshRenderer のAnchorOverride を一括で設定するツールです。
+現時点では VRCSDK2 のみの対応です。
 * [Booth ショップページ](https://kamishirolab.booth.pm/items/2494327)
 ### 想定環境
 Unity 2018.4.20f1
