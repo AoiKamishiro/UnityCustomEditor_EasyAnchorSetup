@@ -33,6 +33,7 @@ namespace Kamishiro.UnityEditor.EasyAnchorSetup
         private GameObject[] avatars = new GameObject[] { };
         private Transform[] anchors = new Transform[] { };
         private bool isFirst = true;
+        private bool showHelp = true;
 
         private void OnGUI()
         {
@@ -49,8 +50,9 @@ namespace Kamishiro.UnityEditor.EasyAnchorSetup
             EditorGUILayout.LabelField("Language");
             Langs.current = (Langs.Language)EditorGUILayout.EnumPopup(Langs.current);
             EditorGUILayout.EndHorizontal();
+            showHelp = EditorGUILayout.ToggleLeft("Show help", showHelp);
 
-            EditorGUILayout.HelpBox(Translate.UpdateAvatar(), MessageType.Info);
+            if (showHelp) EditorGUILayout.HelpBox(Translate.UpdateAvatar(), MessageType.Info);
             if (GUILayout.Button("Update Avtars"))
             {
                 UpdateList();
@@ -77,7 +79,7 @@ namespace Kamishiro.UnityEditor.EasyAnchorSetup
                     EditorGUILayout.EndHorizontal();
                 }
 
-                EditorGUILayout.HelpBox(Translate.AnchorNone(), MessageType.Info);
+                if (showHelp) EditorGUILayout.HelpBox(Translate.AnchorNone(), MessageType.Info);
                 bool result = CheckAnchor();
                 bool btnresult;
                 EditorGUI.BeginDisabledGroup(result);
@@ -90,7 +92,7 @@ namespace Kamishiro.UnityEditor.EasyAnchorSetup
             }
             else
             {
-                EditorGUILayout.HelpBox(Translate.NoDesctiptor(), MessageType.Info);
+                if (showHelp) EditorGUILayout.HelpBox(Translate.NoDesctiptor(), MessageType.Info);
             }
             UIHelper.ShurikenHeader("About");
             EditorGUILayout.LabelField("Author: AoiKamishiro / 神城アオイ", EditorStyles.boldLabel);
