@@ -25,7 +25,7 @@ namespace Kamishiro.UnityEditor.EasyAnchorSetup
     public class Version
     {
         public static int versionInt;
-        private const string version = "v1.00";
+        private const string version = "v1.21";
         private static UnityWebRequest www;
         private const string localver = "akeasyanchorsetup_version_local";
         private const string remotever = "akeasyanchorsetup_version_remote";
