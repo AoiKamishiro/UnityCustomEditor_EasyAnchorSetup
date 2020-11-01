@@ -1,4 +1,12 @@
-﻿using System.Collections.Generic;
+﻿/*
+ * Copyright (c) 2020 AoiKamishiro
+ * 
+ * This code is provided under the MIT license.
+ *
+ */
+
+
+using System.Collections.Generic;
 using System.Linq;
 using UnityEditor;
 using UnityEditor.SceneManagement;
@@ -30,7 +38,16 @@ namespace Kamishiro.UnityEditor.AutoAnchorOverride
                 anchors = SetupAnchorOverrides();
                 isFirst = false;
             }
-            EditorGUILayout.HelpBox("Update Avatar を押してアバター一覧を更新します。", MessageType.Info);
+
+            UIHelper.ShurikenHeader("Auto AnchorOverride");
+
+            EditorGUILayout.Space();
+            EditorGUILayout.BeginHorizontal();
+            EditorGUILayout.LabelField("Language");
+            Langs.current = (Langs.Language)EditorGUILayout.EnumPopup(Langs.current);
+            EditorGUILayout.EndHorizontal();
+
+            EditorGUILayout.HelpBox(Translate.UpdateAvatar(), MessageType.Info);
             if (GUILayout.Button("Update Avtars"))
             {
                 avatars = SortAvatars(FindAllAvatarsInScene());
@@ -59,9 +76,9 @@ namespace Kamishiro.UnityEditor.AutoAnchorOverride
                     EditorGUILayout.EndHorizontal();
                 }
 
-                EditorGUILayout.HelpBox("AnchorOverride が None になっている項目はスキップされます。", MessageType.Info);
+                EditorGUILayout.HelpBox(Translate.AnchorNone(), MessageType.Info);
                 bool result = CheckAnchor();
-                bool btnresult = false;
+                bool btnresult;
                 EditorGUI.BeginDisabledGroup(result);
                 btnresult = GUILayout.Button("Setup Anchor Override");
                 EditorGUI.EndDisabledGroup();
@@ -72,8 +89,25 @@ namespace Kamishiro.UnityEditor.AutoAnchorOverride
             }
             else
             {
-                EditorGUILayout.HelpBox("VRC_AvatarDesctipterが見つかりませんでした。", MessageType.Info);
+                EditorGUILayout.HelpBox(Translate.NoDesctiptor(), MessageType.Info);
             }
+            UIHelper.ShurikenHeader("About");
+            EditorGUILayout.LabelField("Author: AoiKamishiro / 神代 アオイ", EditorStyles.boldLabel);
+
+            if (GUILayout.Button("Readme"))
+            {
+                UIHelper.OpenLink(URL.GIUHUB_REPOS);
+            }
+            EditorGUILayout.BeginHorizontal();
+            if (GUILayout.Button("GitHub Release"))
+            {
+                UIHelper.OpenLink(URL.GITHUB_RELEASE);
+            }
+            if (GUILayout.Button("Booth Page"))
+            {
+                UIHelper.OpenLink(URL.BOOTH_PAGE);
+            }
+            EditorGUILayout.EndHorizontal();
         }
         private void DrawWindow(int i)
         {
@@ -206,7 +240,7 @@ namespace Kamishiro.UnityEditor.AutoAnchorOverride
                     avtrs += "\n" + avatars[i].name;
                 }
             }
-            bool result = EditorUtility.DisplayDialog("Auto AnchorOverride", "シーンを保存し、以下のアバターのAnchorOverrideの設定を変更します。宜しいですか？" + avtrs, "続行", "中止");
+            bool result = EditorUtility.DisplayDialog("Auto AnchorOverride", Translate.ModAccept() + avtrs, Translate.Continue(), Translate.Cancel());
             if (result)
             {
                 SceneSaver();
@@ -215,6 +249,7 @@ namespace Kamishiro.UnityEditor.AutoAnchorOverride
 
                 avatars = SortAvatars(FindAllAvatarsInScene());
                 anchors = SetupAnchorOverrides();
+                EditorUtility.DisplayDialog("Auto AnchorOverride", Translate.OperationFin(), "OK");
             }
         }
         private bool CheckAnchor()
@@ -227,7 +262,7 @@ namespace Kamishiro.UnityEditor.AutoAnchorOverride
                     if (!isInChildern(avatars[i].transform, anchors[i]))
                     {
                         rev = true;
-                        EditorGUILayout.HelpBox("AnchorOverrideがアバターの子にありません。アバター内のオブジェクトを指定してください。\n" + avatars[i].name, MessageType.Error);
+                        EditorGUILayout.HelpBox(Translate.OverrideError() + "\n" + avatars[i].name, MessageType.Error);
                     }
                 }
             }
