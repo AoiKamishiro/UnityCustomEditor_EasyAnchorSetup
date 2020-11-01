@@ -10,7 +10,7 @@ using UnityEditor.Callbacks;
 using UnityEngine;
 using UnityEngine.Networking;
 
-namespace Kamishiro.UnityEditor.EasyAnchorOverride
+namespace Kamishiro.UnityEditor.EasyAnchorSetup
 {
     internal static class Langs
     {
@@ -27,9 +27,9 @@ namespace Kamishiro.UnityEditor.EasyAnchorOverride
         public static int versionInt;
         private const string version = "v1.00";
         private static UnityWebRequest www;
-        private const string localver = "akeasyanchoroverride_version_local";
-        private const string remotever = "akeasyanchoroverride_version_remote";
-        private const string needUpdate = "akeasyanchoroverride_need_update";
+        private const string localver = "akeasyanchorsetup_version_local";
+        private const string remotever = "akeasyanchorsetup_version_remote";
+        private const string needUpdate = "akeasyanchorsetup_need_update";
 
         [DidReloadScripts(0)]
         private static void CheckVersion()

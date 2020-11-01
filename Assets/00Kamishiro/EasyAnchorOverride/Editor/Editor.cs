@@ -12,21 +12,25 @@ using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using VRCSDK2;
+#if VRC_SDK_VRCSDK2
+#endif
+#if VRC_SDK_VRCSDK3
+using VRC.SDK3.Avatars.Components;
+#endif
 
-namespace Kamishiro.UnityEditor.EasyAnchorOverride
+namespace Kamishiro.UnityEditor.EasyAnchorSetup
 {
     public class MainWindow : EditorWindow
     {
-        [MenuItem("Tools/Kamishiro/EasyAnchorOverride", priority = 150)]
+        [MenuItem("Tools/Kamishiro/EasyAnchorSetup", priority = 150)]
         private static void OnEnable()
         {
-            MainWindow window = GetWindow<MainWindow>("EasyAnchorOverride");
+            MainWindow window = GetWindow<MainWindow>("EasyAnchorSetup");
             window.minSize = new Vector2(400, 360);
             window.Show();
         }
 
-        private VRC_AvatarDescriptor[] avatars = new VRC_AvatarDescriptor[] { };
+        private GameObject[] avatars = new GameObject[] { };
         private Transform[] anchors = new Transform[] { };
         private bool isFirst = true;
 
@@ -34,12 +38,11 @@ namespace Kamishiro.UnityEditor.EasyAnchorOverride
         {
             if (isFirst)
             {
-                avatars = SortAvatars(FindAllAvatarsInScene());
-                anchors = SetupAnchorOverrides();
+                UpdateList();
                 isFirst = false;
             }
 
-            UIHelper.ShurikenHeader("Easy AnchorOverride");
+            UIHelper.ShurikenHeader("EasyAnchorSetup");
 
             EditorGUILayout.Space();
             EditorGUILayout.BeginHorizontal();
@@ -50,8 +53,7 @@ namespace Kamishiro.UnityEditor.EasyAnchorOverride
             EditorGUILayout.HelpBox(Translate.UpdateAvatar(), MessageType.Info);
             if (GUILayout.Button("Update Avtars"))
             {
-                avatars = SortAvatars(FindAllAvatarsInScene());
-                anchors = SetupAnchorOverrides();
+                UpdateList();
             }
             EditorGUILayout.BeginHorizontal();
             EditorGUILayout.LabelField("Avatars", EditorStyles.boldLabel);
@@ -65,13 +67,12 @@ namespace Kamishiro.UnityEditor.EasyAnchorOverride
                     EditorGUILayout.BeginHorizontal();
                     try
                     {
-                        DrawWindow(i);
+                        DrawAvatarList(i);
                     }
                     catch
                     {
-                        avatars = SortAvatars(FindAllAvatarsInScene());
-                        anchors = SetupAnchorOverrides();
-                        DrawWindow(i);
+                        UpdateList();
+                        DrawAvatarList(i);
                     }
                     EditorGUILayout.EndHorizontal();
                 }
@@ -84,7 +85,7 @@ namespace Kamishiro.UnityEditor.EasyAnchorOverride
                 EditorGUI.EndDisabledGroup();
                 if (btnresult)
                 {
-                    DisplayDialog();
+                    ConfirmDialog();
                 }
             }
             else
@@ -92,7 +93,7 @@ namespace Kamishiro.UnityEditor.EasyAnchorOverride
                 EditorGUILayout.HelpBox(Translate.NoDesctiptor(), MessageType.Info);
             }
             UIHelper.ShurikenHeader("About");
-            EditorGUILayout.LabelField("Author: AoiKamishiro / 神代 アオイ", EditorStyles.boldLabel);
+            EditorGUILayout.LabelField("Author: AoiKamishiro / 神城アオイ", EditorStyles.boldLabel);
 
             if (GUILayout.Button("Readme"))
             {
@@ -100,38 +101,18 @@ namespace Kamishiro.UnityEditor.EasyAnchorOverride
             }
             Version.DisplayVersion();
         }
-        private void DrawWindow(int i)
+        private void DrawAvatarList(int i)
         {
             EditorGUILayout.LabelField(avatars[i].name);
             anchors[i] = (Transform)EditorGUILayout.ObjectField(anchors[i], typeof(Transform), true);
         }
-        private VRC_AvatarDescriptor[] FindAllAvatarsInScene()
+        private GameObject[] SortGameObjects(GameObject[] gameObjects)
         {
-            VRC_AvatarDescriptor[] avatars = new VRC_AvatarDescriptor[] { };
-
-            VRC_AvatarDescriptor[] objects = Resources.FindObjectsOfTypeAll(typeof(VRC_AvatarDescriptor)) as VRC_AvatarDescriptor[];
-
-            foreach (VRC_AvatarDescriptor avatar in objects)
-            {
-                if (avatar.hideFlags != HideFlags.NotEditable && avatar.hideFlags != HideFlags.HideAndDontSave)
-                {
-                    string path = AssetDatabase.GetAssetOrScenePath(avatar);
-                    bool isScene = path.Contains(".unity");
-                    if (isScene)
-                    {
-                        avatars = avatars.Concat(new VRC_AvatarDescriptor[] { avatar }).ToArray();
-                    }
-                }
-            }
-            return avatars;
+            List<GameObject> rev = gameObjects.ToList();
+            rev.Sort((a, b) => (a.transform.GetSiblingIndex() - b.transform.GetSiblingIndex()));
+            return rev.ToArray();
         }
-        private VRC_AvatarDescriptor[] SortAvatars(VRC_AvatarDescriptor[] avatarDescriptors)
-        {
-            List<VRC_AvatarDescriptor> avatars = avatarDescriptors.ToList();
-            avatars.Sort((a, b) => (a.transform.GetSiblingIndex() - b.transform.GetSiblingIndex()));
-            return avatars.ToArray();
-        }
-        private Transform[] SetupAnchorOverrides()
+        private Transform[] GetCurrentAnchors()
         {
             Transform[] anchorOverrides = new Transform[avatars.Length];
 
@@ -157,31 +138,11 @@ namespace Kamishiro.UnityEditor.EasyAnchorOverride
                 }
 
                 ac = (ac.ToList().Distinct()).ToArray();
-
-                if (ac.Length == 1)
-                {
-                    anchorOverrides[i] = ac[0];
-                }
-                else
-                {
-                    Transform anchorOverride = avatars[i].transform.Find("AnchorOverride");
-                    if (anchorOverride != null)
-                    {
-                        anchorOverrides[i] = anchorOverride;
-                    }
-                    else
-                    {
-                        Transform head = avatars[i].transform.Find("Head");
-                        if (head != null)
-                        {
-                            anchorOverrides[i] = head;
-                        }
-                    }
-                }
+                anchorOverrides[i] = ac.Length == 1 ? ac[0] : null;
             }
             return anchorOverrides;
         }
-        private void SetAnchorOverrides()
+        private void UpdateAnchors()
         {
             for (int i = 0; i < avatars.Length; i++)
             {
@@ -214,14 +175,14 @@ namespace Kamishiro.UnityEditor.EasyAnchorOverride
                 EditorSceneManager.MarkSceneDirty(SceneManager.GetSceneAt(i));
             }
         }
-        private void SceneSaver()
+        private void SaveScene()
         {
             for (int i = 0; i < SceneManager.sceneCount; i++)
             {
                 EditorSceneManager.SaveScene(SceneManager.GetSceneAt(i));
             }
         }
-        private void DisplayDialog()
+        private void ConfirmDialog()
         {
             string avtrs = "\n";
             for (int i = 0; i < avatars.Length; i++)
@@ -234,14 +195,17 @@ namespace Kamishiro.UnityEditor.EasyAnchorOverride
             bool result = EditorUtility.DisplayDialog("Auto AnchorOverride", Translate.ModAccept() + avtrs, Translate.Continue(), Translate.Cancel());
             if (result)
             {
-                SceneSaver();
-                SetAnchorOverrides();
+                SaveScene();
+                UpdateAnchors();
                 SetSceneDirty();
-
-                avatars = SortAvatars(FindAllAvatarsInScene());
-                anchors = SetupAnchorOverrides();
+                UpdateList();
                 EditorUtility.DisplayDialog("Auto AnchorOverride", Translate.OperationFin(), "OK");
             }
+        }
+        private void UpdateList()
+        {
+            avatars = SortGameObjects(VRCSDK.GetAllAvatars());
+            anchors = GetCurrentAnchors();
         }
         private bool CheckAnchor()
         {
