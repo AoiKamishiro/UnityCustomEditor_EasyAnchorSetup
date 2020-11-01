@@ -7,8 +7,8 @@
 現時点では VRCSDK2 のみの対応です。
 * [Booth ショップページ](https://kamishirolab.booth.pm/items/2494327)
 ### 想定環境
-Unity 2018.4.20f1
-VRCSDK2
+* Unity 2018.4.20f1
+* VRCSDK2
 ### 使用方法
 UnityPackage をインポート後、Tools/Kamishiro/EasyAnchorOverride から起動できます。
 ### 連絡先
