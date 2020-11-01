@@ -10,7 +10,7 @@ using UnityEditor.Callbacks;
 using UnityEngine;
 using UnityEngine.Networking;
 
-namespace Kamishiro.UnityEditor.AutoAnchorOverride
+namespace Kamishiro.UnityEditor.EasyAnchorOverride
 {
     internal static class Langs
     {

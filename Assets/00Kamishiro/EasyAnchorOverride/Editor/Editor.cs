@@ -14,14 +14,14 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using VRCSDK2;
 
-namespace Kamishiro.UnityEditor.AutoAnchorOverride
+namespace Kamishiro.UnityEditor.EasyAnchorOverride
 {
     public class MainWindow : EditorWindow
     {
-        [MenuItem("Tools/Kamishiro/AutoAnchorOverride", priority = 150)]
+        [MenuItem("Tools/Kamishiro/EasyAnchorOverride", priority = 150)]
         private static void OnEnable()
         {
-            MainWindow window = GetWindow<MainWindow>("AutoAnchorOverride");
+            MainWindow window = GetWindow<MainWindow>("EasyAnchorOverride");
             window.minSize = new Vector2(400, 360);
             window.Show();
         }
@@ -39,7 +39,7 @@ namespace Kamishiro.UnityEditor.AutoAnchorOverride
                 isFirst = false;
             }
 
-            UIHelper.ShurikenHeader("Auto AnchorOverride");
+            UIHelper.ShurikenHeader("Easy AnchorOverride");
 
             EditorGUILayout.Space();
             EditorGUILayout.BeginHorizontal();

@@ -5,7 +5,7 @@
  *
  */
 
-namespace Kamishiro.UnityEditor.AutoAnchorOverride
+namespace Kamishiro.UnityEditor.EasyAnchorOverride
 {
     internal static class Translate
     {
@@ -61,9 +61,9 @@ namespace Kamishiro.UnityEditor.AutoAnchorOverride
     }
     internal static class URL
     {
-        public const string GIUHUB_REPOS = "https://github.com/AoiKamishiro/UnityCustomEditor_AutoAnchorOverride";
-        public const string GITHUB_RELEASE = "https://github.com/AoiKamishiro/UnityCustomEditor_AutoAnchorOverride/releases";
-        public const string GITHUB_VERCHECK = "https://api.github.com/repos/AoiKamishiro/UnityCustomEditor_AutoAnchorOverride/releases/latest";
+        public const string GIUHUB_REPOS = "https://github.com/AoiKamishiro/UnityCustomEditor_EasyAnchorOverride";
+        public const string GITHUB_RELEASE = "https://github.com/AoiKamishiro/UnityCustomEditor_EasyAnchorOverride/releases";
+        public const string GITHUB_VERCHECK = "https://api.github.com/repos/AoiKamishiro/UnityCustomEditor_EasyAnchorOverride/releases/latest";
         public const string BOOTH_PAGE = "https://kamishirolab.booth.pm/items/2494327";
     }
     static class UIText

@@ -11,7 +11,7 @@
 using UnityEditor;
 using UnityEngine;
 
-namespace Kamishiro.UnityEditor.AutoAnchorOverride
+namespace Kamishiro.UnityEditor.EasyAnchorOverride
 {
     public static class UIHelper
     {
