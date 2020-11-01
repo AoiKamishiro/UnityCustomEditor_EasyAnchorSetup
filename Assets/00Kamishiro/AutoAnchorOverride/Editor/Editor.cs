@@ -98,16 +98,7 @@ namespace Kamishiro.UnityEditor.AutoAnchorOverride
             {
                 UIHelper.OpenLink(URL.GIUHUB_REPOS);
             }
-            EditorGUILayout.BeginHorizontal();
-            if (GUILayout.Button("GitHub Release"))
-            {
-                UIHelper.OpenLink(URL.GITHUB_RELEASE);
-            }
-            if (GUILayout.Button("Booth Page"))
-            {
-                UIHelper.OpenLink(URL.BOOTH_PAGE);
-            }
-            EditorGUILayout.EndHorizontal();
+            Version.DisplayVersion();
         }
         private void DrawWindow(int i)
         {

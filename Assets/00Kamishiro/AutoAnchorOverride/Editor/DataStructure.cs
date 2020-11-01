@@ -63,6 +63,11 @@ namespace Kamishiro.UnityEditor.AutoAnchorOverride
     {
         public const string GIUHUB_REPOS = "https://github.com/AoiKamishiro/UnityCustomEditor_AutoAnchorOverride";
         public const string GITHUB_RELEASE = "https://github.com/AoiKamishiro/UnityCustomEditor_AutoAnchorOverride/releases";
+        public const string GITHUB_VERCHECK = "https://api.github.com/repos/AoiKamishiro/UnityCustomEditor_AutoAnchorOverride/releases/latest";
         public const string BOOTH_PAGE = "https://kamishirolab.booth.pm/items/2494327";
+    }
+    static class UIText
+    {
+        //public const string 
     }
 }
