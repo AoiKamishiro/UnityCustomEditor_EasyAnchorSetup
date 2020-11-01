@@ -34,6 +34,7 @@ namespace Kamishiro.UnityEditor.EasyAnchorSetup
         private Transform[] anchors = new Transform[] { };
         private bool isFirst = true;
         private bool showHelp = true;
+        private Vector2 scroll = Vector2.zero;
 
         private void OnGUI()
         {
@@ -62,6 +63,7 @@ namespace Kamishiro.UnityEditor.EasyAnchorSetup
             EditorGUILayout.LabelField("AnchorOverride", EditorStyles.boldLabel);
             EditorGUILayout.EndHorizontal();
 
+            scroll = EditorGUILayout.BeginScrollView(scroll);
             if (avatars.Length > 0)
             {
                 for (int i = 0; i < avatars.Length; i++)
@@ -81,6 +83,7 @@ namespace Kamishiro.UnityEditor.EasyAnchorSetup
 
                 if (showHelp) EditorGUILayout.HelpBox(Translate.AnchorNone(), MessageType.Info);
                 bool result = CheckAnchor();
+                EditorGUILayout.EndScrollView();
                 bool btnresult;
                 EditorGUI.BeginDisabledGroup(result);
                 btnresult = GUILayout.Button("Setup Anchor Override");
@@ -102,6 +105,7 @@ namespace Kamishiro.UnityEditor.EasyAnchorSetup
                 UIHelper.OpenLink(URL.GIUHUB_REPOS);
             }
             Version.DisplayVersion();
+            EditorGUILayout.Space();
         }
         private void DrawAvatarList(int i)
         {
