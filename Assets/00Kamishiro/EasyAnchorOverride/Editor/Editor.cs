@@ -178,14 +178,20 @@ namespace Kamishiro.UnityEditor.EasyAnchorSetup
         {
             for (int i = 0; i < SceneManager.sceneCount; i++)
             {
-                EditorSceneManager.MarkSceneDirty(SceneManager.GetSceneAt(i));
+                if (SceneManager.GetSceneAt(i).isLoaded)
+                {
+                    EditorSceneManager.MarkSceneDirty(SceneManager.GetSceneAt(i));
+                }
             }
         }
         private void SaveScene()
         {
             for (int i = 0; i < SceneManager.sceneCount; i++)
             {
-                EditorSceneManager.SaveScene(SceneManager.GetSceneAt(i));
+                if (SceneManager.GetSceneAt(i).isLoaded)
+                {
+                    EditorSceneManager.SaveScene(SceneManager.GetSceneAt(i));
+                }
             }
         }
         private void ConfirmDialog()
