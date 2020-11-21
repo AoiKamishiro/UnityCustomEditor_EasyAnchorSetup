@@ -1,13 +1,13 @@
-#if VRC_SDK_VRCSDK2
-using VRCSDK2;
-#endif
 /*
  * Copyright (c) 2020 AoiKamishiro
  * 
  * This code is provided under the MIT license.
  *
  */
-
+ 
+#if VRC_SDK_VRCSDK2
+using VRCSDK2;
+#endif
 #if VRC_SDK_VRCSDK3
 using VRC.SDK3.Avatars.Components;
 #endif
