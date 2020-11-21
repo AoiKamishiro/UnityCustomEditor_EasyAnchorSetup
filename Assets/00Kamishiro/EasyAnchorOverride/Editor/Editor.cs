@@ -5,18 +5,12 @@
  *
  */
 
-
 using System.Collections.Generic;
 using System.Linq;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-#if VRC_SDK_VRCSDK2
-#endif
-#if VRC_SDK_VRCSDK3
-using VRC.SDK3.Avatars.Components;
-#endif
 
 namespace Kamishiro.UnityEditor.EasyAnchorSetup
 {
