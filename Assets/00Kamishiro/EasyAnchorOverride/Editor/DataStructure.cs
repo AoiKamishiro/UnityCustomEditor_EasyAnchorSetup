@@ -65,10 +65,13 @@ namespace Kamishiro.UnityEditor.EasyAnchorSetup
         public const string GITHUB_RELEASE = "https://github.com/AoiKamishiro/UnityCustomEditor_EasyAnchorSetup/releases";
         public const string GITHUB_VERCHECK = "https://api.github.com/repos/AoiKamishiro/UnityCustomEditor_EasyAnchorSetup/releases/latest";
         public const string BOOTH_PAGE = "https://kamishirolab.booth.pm/items/2494327";
+        public const string VKET_PAGE ="https://www.v-market.work/ec/items/3993/detail/";
     }
 
     internal static class UIText
     {
-        //public const string 
+        public const string btnGithub ="Github";
+        public const string btnBooth ="Booth";
+        public const string btnVket ="Vket";
     }
 }

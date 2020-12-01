@@ -18,6 +18,7 @@ AnchorOverrideに何を設定したら良いかわからない！という場合
 ツールの不具合などは下記連絡先まで。
 
 * [Booth ショップページ](https://kamishirolab.booth.pm/items/2494327)
+* [Vket ショップページ](https://www.v-market.work/ec/items/3993/detail/)
 ### 想定環境
 * Unity 2018.4.20f1
 * VRCSDK2 or VRCSDK3-Avatar
@@ -26,4 +27,5 @@ UnityPackage をインポート後、Tools/Kamishiro/EasyAnchorSetup から起�
 ### 連絡先
 [Twitter: @aoi3192](https://twitter.com/aoi3192)  
 [Booth: 神城工業](https://kamishirolab.booth.pm/)  
+[Vket: 神城工業](https://www.v-market.work/ec/shops/1810/detail/)  
 [VRC: 神城アオイ](https://www.vrchat.com/home/user/usr_19514816-2cf8-43cc-a046-9e2d87d15af7)

@@ -25,7 +25,7 @@ namespace Kamishiro.UnityEditor.EasyAnchorSetup
     public class Version
     {
         public static int versionInt;
-        private const string version = "v1.30";
+        private const string version = "v1.31";
         private static UnityWebRequest www;
         private const string localver = "akeasyanchorsetup_version_local";
         private const string remotever = "akeasyanchorsetup_version_remote";
@@ -113,13 +113,15 @@ namespace Kamishiro.UnityEditor.EasyAnchorSetup
             EditorGUILayout.LabelField("Remote Version: " + EditorUserSettings.GetConfigValue(remotever));
             if (bool.TryParse(EditorUserSettings.GetConfigValue(needUpdate), out bool needupdate) && needupdate)
             {
-                if (GUILayout.Button("GitHub Release"))
+                using (new EditorGUILayout.VerticalScope(GUI.skin.box))
                 {
-                    UIHelper.OpenLink(URL.GITHUB_RELEASE);
-                }
-                if (GUILayout.Button("Booth Page"))
-                {
-                    UIHelper.OpenLink(URL.BOOTH_PAGE);
+                    EditorGUILayout.LabelField("Update", EditorStyles.boldLabel);
+                    using (new EditorGUILayout.HorizontalScope())
+                    {
+                        if (GUILayout.Button(UIText.btnGithub)) { UIHelper.OpenLink(URL.GITHUB_RELEASE); }
+                        if (GUILayout.Button(UIText.btnBooth)) { UIHelper.OpenLink(URL.BOOTH_PAGE); }
+                        if (GUILayout.Button(UIText.btnVket)) { UIHelper.OpenLink(URL.VKET_PAGE); }
+                    }
                 }
             }
         }
